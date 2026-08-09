@@ -42,7 +42,6 @@ export default defineConfig({
         // Vendor-split strategy to keep initial bundle lean
         manualChunks: {
           react:      ['react', 'react-dom'],
-          recharts:   ['recharts'],
           mediapipe:  ['@mediapipe/camera_utils', '@mediapipe/face_mesh'],
         },
       },
