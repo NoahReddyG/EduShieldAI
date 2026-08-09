@@ -1,6 +1,3 @@
-/**
- * AppRouter.jsx — Role-based React Router v6 configuration.
- */
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from '../pages/LoginPage';
 import TeacherDashboard from '../pages/TeacherDashboard';

@@ -1,8 +1,3 @@
-/**
- * Navbar.jsx
- * Global top navigation bar — shows branding, active exam info,
- * current user role, and quick-access Trust Score badge in compact mode.
- */
 import { Link, useLocation } from 'react-router-dom';
 import { ShieldCheck, LogOut, User, LayoutDashboard } from 'lucide-react';
 import { getStoredUser, logout } from '../services/authService';

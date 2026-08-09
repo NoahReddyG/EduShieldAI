@@ -1,8 +1,3 @@
-/**
- * ExamPage.jsx — Live proctored exam environment.
- * Loads test dynamically from testService via :testId route param.
- * MediaPipe face mesh + anomaly pipeline + AI simplifier + accessibility.
- */
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
@@ -18,7 +13,6 @@ import { logAnomaly, closeSession } from '../services/proctoringService';
 import { getTestById, saveTestResult } from '../services/testService';
 import { useAccessibility } from '../hooks/useAccessibility';
 
-// ── MediaPipe loader ───────────────────────────────────────────────────────────
 function loadScript(src) {
   return new Promise((resolve, reject) => {
     if (document.querySelector(`script[src="${src}"]`)) { resolve(); return; }
@@ -43,12 +37,10 @@ export default function ExamPage() {
   const user = getStoredUser();
   const { speak } = useAccessibility();
 
-  // ── Test data ──────────────────────────────────────────────────────────────
   const [test, setTest] = useState(null);
   const [sessionId, setSessionId] = useState(null);
   const [notFound, setNotFound] = useState(false);
 
-  // ── Exam state ─────────────────────────────────────────────────────────────
   const [trustScore, setTrustScore] = useState(100);
   const [timeLeft, setTimeLeft] = useState(0);
   const [answers, setAnswers] = useState({});
@@ -56,17 +48,14 @@ export default function ExamPage() {
   const [submitting, setSubmitting] = useState(false);
   const [anomalyLog, setAnomalyLog] = useState([]);
 
-  // ── Camera state ───────────────────────────────────────────────────────────
   const [cameraReady, setCameraReady] = useState(false);
   const [cameraError, setCameraError] = useState(null);
   const [mediapipeReady, setMediapipeReady] = useState(false);
   const [currentAnomalyType, setCurrentAnomalyType] = useState(null);
 
-  // ── Simplifier state ───────────────────────────────────────────────────────
   const [simplifierOpen, setSimplifierOpen] = useState(false);
   const [selectedText, setSelectedText] = useState('');
 
-  // ── Refs ───────────────────────────────────────────────────────────────────
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const sessionRef = useRef(null);
@@ -77,17 +66,14 @@ export default function ExamPage() {
   const anomalyTimerRef = useRef(null);
   const submittedRef = useRef(false);
 
-  // ── Load test & session ────────────────────────────────────────────────────
   useEffect(() => {
     if (!user) { navigate('/'); return; }
 
-    // Load test
     const loaded = getTestById(testId);
     if (!loaded) { setNotFound(true); return; }
     setTest(loaded);
     setTimeLeft((loaded.duration || 30) * 60);
 
-    // Recover session from student dashboard start flow
     try {
       const stored = JSON.parse(localStorage.getItem(`edushield_active_session_${testId}`) || 'null');
       if (stored?.sessionId) {
@@ -101,10 +87,9 @@ export default function ExamPage() {
       setSessionId(fallback);
       sessionRef.current = fallback;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, [testId]);
 
-  // ── Timer ──────────────────────────────────────────────────────────────────
   useEffect(() => {
     if (!test || submitted || timeLeft <= 0) return;
     const interval = setInterval(() => {
@@ -114,10 +99,9 @@ export default function ExamPage() {
       });
     }, 1000);
     return () => clearInterval(interval);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, [test, submitted]);
 
-  // ── MediaPipe camera setup ─────────────────────────────────────────────────
   useEffect(() => {
     if (!test) return;
     let cancelled = false;
@@ -165,10 +149,9 @@ export default function ExamPage() {
       faceMeshRef.current?.close?.();
       videoRef.current?.srcObject?.getTracks().forEach(t => t.stop());
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, [test]);
 
-  // ── Face mesh results ──────────────────────────────────────────────────────
   const handleFaceResults = useCallback((results) => {
     const canvas = canvasRef.current;
     const video = videoRef.current;
@@ -243,7 +226,6 @@ export default function ExamPage() {
     setAnomalyLog(prev => [...prev, { id: Date.now(), type: flagType, confidence, details, time: new Date().toLocaleTimeString() }]);
   }, []);
 
-  // ── Submit ─────────────────────────────────────────────────────────────────
   const handleSubmit = useCallback(async () => {
     if (submittedRef.current || submitting) return;
     submittedRef.current = true;
@@ -255,10 +237,9 @@ export default function ExamPage() {
 
     try { await closeSession(sid, 'COMPLETED'); } catch { /* offline */ }
 
-    // Save result to localStorage for student dashboard & teacher results
     if (test) {
       const questions = test.questions || [];
-      // Grade each answered question
+      
       const answerReview = questions.map(q => {
         const chosen = answers[q.id];
         const isAnswered = chosen !== undefined;
@@ -287,13 +268,13 @@ export default function ExamPage() {
         examTitle: test.title,
         anomalyCount: anomalyLog.length,
         answers,
-        // ── Graded score data ──
+        
         correctAnswers,
         totalQuestions,
         attemptedQuestions,
         answerReview,
       });
-      // Clean up active session key
+      
       localStorage.removeItem(`edushield_active_session_${test.id}`);
     }
 
@@ -315,7 +296,6 @@ export default function ExamPage() {
     setSimplifierOpen(true);
   };
 
-  // ── Loading / not found states ─────────────────────────────────────────────
   if (notFound) {
     return (
       <div style={{ minHeight: '100svh', background: 'var(--color-surface)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '12px' }}>

@@ -1,16 +1,8 @@
--- ─────────────────────────────────────────────────────────────────────────────
--- EduShield AI — MySQL Schema Initialization
--- Run automatically by Docker on first container startup via
--- /docker-entrypoint-initdb.d/init.sql
--- ─────────────────────────────────────────────────────────────────────────────
-
 CREATE DATABASE IF NOT EXISTS edushield_db
     CHARACTER SET utf8mb4
     COLLATE utf8mb4_unicode_ci;
 
 USE edushield_db;
-
--- ── Users Table ───────────────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS users (
     user_id           INT UNSIGNED    NOT NULL AUTO_INCREMENT,
     name              VARCHAR(100)    NOT NULL,
@@ -26,7 +18,6 @@ CREATE TABLE IF NOT EXISTS users (
     INDEX idx_users_role (role)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ── Exam Sessions Table ────────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS exam_sessions (
     session_id   INT UNSIGNED    NOT NULL AUTO_INCREMENT,
     student_id   INT UNSIGNED    NOT NULL,
@@ -47,7 +38,6 @@ CREATE TABLE IF NOT EXISTS exam_sessions (
         ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ── Anomaly Logs Table ─────────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS anomaly_logs (
     log_id           INT UNSIGNED NOT NULL AUTO_INCREMENT,
     session_id       INT UNSIGNED NOT NULL,
@@ -67,8 +57,6 @@ CREATE TABLE IF NOT EXISTS anomaly_logs (
         ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ── Seed: Demo Faculty Account ─────────────────────────────────────────────────
--- Password hash for "admin123" (bcrypt, rounds=12) — CHANGE IN PRODUCTION
 INSERT IGNORE INTO users (name, email, password_hash, role)
 VALUES (
     'Demo Professor',

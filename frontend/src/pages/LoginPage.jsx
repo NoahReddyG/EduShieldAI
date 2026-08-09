@@ -1,6 +1,3 @@
-/**
- * LoginPage.jsx — Role selection + login, routes to /teacher or /student.
- */
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ShieldCheck, GraduationCap, UserCog, Mail, Lock, ArrowRight, Loader2, AlertCircle, Eye, EyeOff } from 'lucide-react';
@@ -54,7 +51,6 @@ export default function LoginPage() {
     setLoading(true);
     setError(null);
 
-    // Ensure seed tests exist before entering the app
     initializeTests();
 
     try {

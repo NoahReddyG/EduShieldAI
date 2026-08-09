@@ -1,8 +1,3 @@
-/**
- * AccessibilityToolbar.jsx
- * Floating accessibility dock — connected to useAccessibility context.
- * Features: font size, dyslexic font, contrast theme, TTS, AI simplifier.
- */
 import { useState } from 'react';
 import {
   Accessibility, Type, Minus, Plus, RotateCcw,

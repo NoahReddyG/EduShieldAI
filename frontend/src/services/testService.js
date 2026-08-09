@@ -1,13 +1,6 @@
-/**
- * testService.js — Test Management (localStorage-backed)
- * Handles test creation, retrieval, and student result tracking.
- * Falls back gracefully when no backend test-management endpoint exists.
- */
-
 const TESTS_KEY = 'edushield_tests';
 const RESULTS_KEY = 'edushield_results';
 
-// ── Demo seed tests (loaded on first use) ─────────────────────────────────────
 const SEED_TESTS = [
   {
     id: 'test-demo-001',
@@ -133,10 +126,6 @@ export function getTeacherTests(teacherEmail) {
   return getAllTests().filter(t => t.createdBy === teacherEmail);
 }
 
-/**
- * Create and persist a new test.
- * @param {object} data - { title, topic, duration, description, instructions, passage, questions, createdBy }
- */
 export function createTest(data) {
   const tests = getAllTests();
   const test = {
@@ -145,21 +134,15 @@ export function createTest(data) {
     createdAt: new Date().toISOString(),
     status: 'active',
   };
-  tests.unshift(test); // newest first
+  tests.unshift(test); 
   localStorage.setItem(TESTS_KEY, JSON.stringify(tests));
   return test;
 }
 
-// ── Results Management ─────────────────────────────────────────────────────────
-
-/**
- * Save/update a student's exam result.
- * @param {object} result - { testId, sessionId, studentEmail, trustScore, status, answers, anomalyCount, examTitle }
- */
 export function saveTestResult(result) {
   try {
     const all = JSON.parse(localStorage.getItem(RESULTS_KEY) || '[]');
-    // Upsert: replace if same student + test
+    
     const filtered = all.filter(
       r => !(r.testId === result.testId && r.studentEmail === result.studentEmail)
     );

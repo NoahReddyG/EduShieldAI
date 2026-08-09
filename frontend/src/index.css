@@ -1,24 +1,6 @@
-/**
- * index.css — EduShieldAI Global Styles
- *
- * Responsibilities:
- *  1. @font-face for OpenDyslexic (served from /public/fonts/)
- *  2. CSS custom property definitions for all three data-theme variants
- *  3. Accessibility CSS variable consumption (--a11y-* from useAccessibility)
- *  4. Base resets and global element styles
- *
- * Theme activation: set data-theme attribute on <html>
- *   "default" | "high-contrast" | "dyslexia"
- */
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   OPENDYSLEXIC — Custom Font Face
-   Files must be placed in /public/fonts/
-   Download from: https://opendyslexic.org/
-   ───────────────────────────────────────────────────────────────────────────── */
 @font-face {
   font-family: "OpenDyslexic";
   src: url("/fonts/OpenDyslexic-Regular.woff2") format("woff2");
@@ -34,10 +16,6 @@
   font-display: swap;
 }
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   THEME: default (dark)
-   Applied when: data-theme="default" or no data-theme attribute
-   ───────────────────────────────────────────────────────────────────────────── */
 :root,
 [data-theme="default"] {
   /* Surfaces */
@@ -76,11 +54,6 @@
   --color-proctor-frame:    #7c6fff;
 }
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   THEME: high-contrast
-   Applied when: data-theme="high-contrast"
-   Targets WCAG AAA 7:1 contrast ratios for low-vision / screen magnification
-   ───────────────────────────────────────────────────────────────────────────── */
 [data-theme="high-contrast"] {
   --color-surface:          #000000;
   --color-surface-raised:   #0d0d0d;
@@ -112,11 +85,6 @@
   --color-proctor-frame:    #fffb00;
 }
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   THEME: dyslexia
-   Applied when: data-theme="dyslexia"
-   Warm cream background, high-contrast brown text — reduces visual crowding
-   ───────────────────────────────────────────────────────────────────────────── */
 [data-theme="dyslexia"] {
   --color-surface:          #fdf6e3;
   --color-surface-raised:   #f8f0d8;
@@ -148,19 +116,12 @@
   --color-proctor-frame:    #c05621;
 }
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   ACCESSIBILITY CSS VARIABLES
-   Set by useAccessibility hook via JS; consumed here for global cascade.
-   ───────────────────────────────────────────────────────────────────────────── */
 :root {
   --a11y-font-scale:      1;       /* Multiplied into font-size below */
   --a11y-line-height:     1.75;
   --a11y-letter-spacing:  0em;
 }
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   BASE RESET & GLOBAL ELEMENT STYLES
-   ───────────────────────────────────────────────────────────────────────────── */
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -206,18 +167,12 @@ body {
   flex-direction: column;
 }
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   FOCUS STYLES — Highly visible for keyboard navigation
-   ───────────────────────────────────────────────────────────────────────────── */
 *:focus-visible {
   outline: 3px solid var(--color-border-focus);
   outline-offset: 3px;
   border-radius: 4px;
 }
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   SCROLLBAR — Themed for dark mode
-   ───────────────────────────────────────────────────────────────────────────── */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -233,9 +188,6 @@ body {
   background: var(--color-on-surface-muted);
 }
 
-/* ─────────────────────────────────────────────────────────────────────────────
-   SELECTION — Themed highlight
-   ───────────────────────────────────────────────────────────────────────────── */
 ::selection {
   background: var(--color-primary-muted);
   color: var(--color-on-surface);

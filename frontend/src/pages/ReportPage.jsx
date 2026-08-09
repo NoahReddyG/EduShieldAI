@@ -1,7 +1,3 @@
-/**
- * ReportPage.jsx
- * Post-exam integrity report with trust score, anomaly timeline, and print export.
- */
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
@@ -24,7 +20,6 @@ const FLAG_META = {
   AUDIO_DISTURBANCE: { label: 'Audio Disturbance', icon: Activity, color: '#f59e0b', penalty: 3.0, description: 'Unexpected audio activity detected' },
 };
 
-// Mock report data for when backend session doesn't exist yet
 const MOCK_REPORT = {
   session_info: {
     session_id: 999,
@@ -65,7 +60,6 @@ export default function ReportPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Role-aware back destination
   const backDest = user?.role === 'FACULTY' ? '/teacher' : '/student';
   const backLabel = user?.role === 'FACULTY' ? 'Back to Dashboard' : 'Back to My Tests';
 
@@ -75,10 +69,10 @@ export default function ReportPage() {
         const data = await getSessionReport(sessionId);
         setReport(data);
       } catch (err) {
-        // Try localStorage result first
+        
         const local = getResultBySessionId(sessionId);
         if (local) {
-          // Synthesize report-shaped object from local result
+          
           setReport({
             session_info: {
               session_id: local.sessionId,
@@ -92,7 +86,7 @@ export default function ReportPage() {
             total_anomalies_flagged: local.anomalyCount || 0,
             anomaly_timeline: [],
             integrity_rating: local.trustScore >= 60 ? 'PASS' : 'FAIL',
-            // ── Graded score from localStorage ──
+            
             correctAnswers: local.correctAnswers ?? null,
             totalQuestions: local.totalQuestions ?? null,
             attemptedQuestions: local.attemptedQuestions ?? null,
@@ -146,12 +140,10 @@ export default function ReportPage() {
   const trustScore = session?.trust_score ?? 100;
   const duration = formatDuration(session?.start_time, session?.end_time);
 
-  // Exam score percentage
   const examScorePct = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) : null;
   const examScoreColor = examScorePct === null ? 'var(--color-on-surface-muted)'
     : examScorePct >= 70 ? '#22c55e' : examScorePct >= 50 ? '#f59e0b' : '#ef4444';
 
-  // Score breakdown by type
   const byType = (anomaly_timeline || []).reduce((acc, a) => {
     acc[a.flag_type] = (acc[a.flag_type] || 0) + 1;
     return acc;

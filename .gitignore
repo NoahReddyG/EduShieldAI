@@ -1,8 +1,3 @@
-# ─────────────────────────────────────────────────────────────────────────────
-# EduShield AI — .gitignore
-# ─────────────────────────────────────────────────────────────────────────────
-
-# ── Environment & Secrets ─────────────────────────────────────────────────────
 .env
 .env.*
 !.env.example
@@ -10,7 +5,6 @@
 *.key
 secrets/
 
-# ── Python ────────────────────────────────────────────────────────────────────
 __pycache__/
 *.py[cod]
 *$py.class
@@ -45,7 +39,6 @@ build/
 MANIFEST
 *.so
 
-# ── Node.js / Frontend ────────────────────────────────────────────────────────
 node_modules/
 npm-debug.log*
 yarn-debug.log*
@@ -56,15 +49,11 @@ pnpm-debug.log*
 .stylelintcache
 *.tsbuildinfo
 
-# ── Vite Build Artifacts ──────────────────────────────────────────────────────
 frontend/dist/
 frontend/.vite/
 
-# ── Docker ────────────────────────────────────────────────────────────────────
-# Never commit Docker override or local compose overrides
 docker-compose.override.yml
 
-# ── IDEs & Editors ────────────────────────────────────────────────────────────
 .vscode/
 .idea/
 *.suo
@@ -76,12 +65,10 @@ docker-compose.override.yml
 Thumbs.db
 *.orig
 
-# ── Logs ─────────────────────────────────────────────────────────────────────
 logs/
 *.log
 npm-debug.log*
 
-# ── Temporary / OS Files ──────────────────────────────────────────────────────
 tmp/
 temp/
 .tmp/
@@ -90,12 +77,10 @@ temp/
 *.swp
 *~
 
-# ── Test Artifacts ────────────────────────────────────────────────────────────
 htmlcov/
 .coverage
 *.cover
 junit.xml
 test-results/
 
-# ── Local Reports & Documentation ─────────────────────────────────────────────
 PROJECT_REPORT.md

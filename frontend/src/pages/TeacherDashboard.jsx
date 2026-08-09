@@ -1,9 +1,3 @@
-/**
- * TeacherDashboard.jsx
- * Faculty dashboard with two tabs:
- *  1. Create Test — dynamic question builder form
- *  2. My Tests & Results — assigned tests with expandable student results table
- */
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -20,7 +14,6 @@ import {
   getTrustLabel, getTrustColor,
 } from '../services/testService';
 
-// ── Shared card style ──────────────────────────────────────────────────────────
 const CARD = {
   background: 'rgba(255,255,255,0.02)',
   border: '1px solid var(--color-border)',
@@ -82,7 +75,6 @@ export default function TeacherDashboard() {
   const [creating, setCreating] = useState(false);
   const [createSuccess, setCreateSuccess] = useState(null);
 
-  // Form state
   const [form, setForm] = useState({
     title: '',
     topic: '',
@@ -96,14 +88,12 @@ export default function TeacherDashboard() {
     { id: Date.now(), ...DEFAULT_QUESTION },
   ]);
 
-  // Load tests on mount
   useEffect(() => {
     if (!user) { navigate('/'); return; }
     setMyTests(user.role === 'FACULTY' ? getAllTests() : []);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, []);
 
-  // ── Question builder helpers ───────────────────────────────────────────────
   const addQuestion = () => {
     setQuestions(prev => [...prev, { id: Date.now(), ...DEFAULT_QUESTION }]);
   };
@@ -130,7 +120,6 @@ export default function TeacherDashboard() {
     setQuestions(prev => prev.map(q => q.id === id ? { ...q, correct: idx } : q));
   };
 
-  // ── Create test ────────────────────────────────────────────────────────────
   const handleCreate = async (e) => {
     e.preventDefault();
     if (!form.title.trim()) return;
@@ -140,7 +129,7 @@ export default function TeacherDashboard() {
     }
 
     setCreating(true);
-    await new Promise(r => setTimeout(r, 400)); // UX delay
+    await new Promise(r => setTimeout(r, 400)); 
 
     const test = createTest({
       ...form,
@@ -159,12 +148,10 @@ export default function TeacherDashboard() {
     setCreating(false);
     setActiveTab('results');
 
-    // Reset form
     setForm({ title: '', topic: '', duration: 30, description: '', instructions: 'Read all questions carefully. Your face must remain visible to the camera at all times.', passage: '' });
     setQuestions([{ id: Date.now(), ...DEFAULT_QUESTION }]);
   };
 
-  // ── Stats ──────────────────────────────────────────────────────────────────
   const totalTests = myTests.length;
   const allResults = myTests.flatMap(t => getTestResults(t.id));
   const totalStudents = allResults.length;

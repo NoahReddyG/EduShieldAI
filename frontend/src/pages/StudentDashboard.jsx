@@ -1,8 +1,3 @@
-/**
- * StudentDashboard.jsx
- * Student exam lobby — shows assigned tests with Start/View Results CTAs.
- * Students must explicitly click "Start Test" to enter the proctored environment.
- */
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -20,7 +15,6 @@ import {
   getTrustLabel, getTrustColor, initializeTests,
 } from '../services/testService';
 
-// Accent palettes for test cards (rotates through)
 const ACCENTS = [
   { primary: '#7c6fff', glow: 'rgba(124,111,255,0.25)', bg: 'rgba(124,111,255,0.06)', border: 'rgba(124,111,255,0.2)' },
   { primary: '#22d3ee', glow: 'rgba(34,211,238,0.2)', bg: 'rgba(34,211,238,0.05)', border: 'rgba(34,211,238,0.18)' },
@@ -61,7 +55,7 @@ export default function StudentDashboard() {
   const [tests, setTests] = useState([]);
   const [startingTestId, setStartingTestId] = useState(null);
   const [results, setResults] = useState([]);
-  const [showInstructions, setShowInstructions] = useState(null); // testId
+  const [showInstructions, setShowInstructions] = useState(null); 
 
   useEffect(() => {
     if (!user) { navigate('/'); return; }
@@ -69,7 +63,7 @@ export default function StudentDashboard() {
     const available = getAllTests().filter(t => t.status === 'active');
     setTests(available);
     setResults(getStudentAllResults(user.email));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, []);
 
   const getResultForTest = (testId) =>
@@ -78,9 +72,9 @@ export default function StudentDashboard() {
   const handleStartTest = async (test) => {
     setStartingTestId(test.id);
     try {
-      // Create backend proctoring session
+      
       const session = await createSession(user.user_id || 1, test.title);
-      // Store session mapping for exam page
+      
       localStorage.setItem(`edushield_active_session_${test.id}`, JSON.stringify({
         testId: test.id,
         sessionId: session.session_id,
@@ -89,7 +83,7 @@ export default function StudentDashboard() {
       navigate(`/exam/${test.id}`);
     } catch (err) {
       console.warn('Session creation failed, proceeding offline:', err);
-      // Offline fallback
+      
       const demoSessionId = Date.now();
       localStorage.setItem(`edushield_active_session_${test.id}`, JSON.stringify({
         testId: test.id,
@@ -100,7 +94,6 @@ export default function StudentDashboard() {
     }
   };
 
-  // Stats
   const completed = results.length;
   const pending = tests.filter(t => !getResultForTest(t.id)).length;
   const avgScore = completed > 0

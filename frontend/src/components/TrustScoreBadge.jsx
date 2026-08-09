@@ -1,9 +1,3 @@
-/**
- * TrustScoreBadge.jsx
- * Animated circular SVG gauge displaying the live proctoring trust score.
- * Colour-shifts: green (≥80) → amber (60–79) → red (<60).
- * Pulses a "FLAGGED FOR REVIEW" banner when score < 60.
- */
 import { useMemo } from 'react';
 import { ShieldAlert, ShieldCheck, ShieldQuestion } from 'lucide-react';
 

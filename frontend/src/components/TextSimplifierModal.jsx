@@ -1,8 +1,3 @@
-/**
- * TextSimplifierModal.jsx
- * Slide-in drawer for AI-powered text simplification.
- * Shows original vs simplified text, bullet points, and TTS read-aloud.
- */
 import { useState, useEffect } from 'react';
 import { X, Wand2, Volume2, VolumeX, Loader2, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { simplifyText } from '../services/accessibilityService';
@@ -14,15 +9,13 @@ export default function TextSimplifierModal({ isOpen, onClose, selectedText = ''
   const [result, setResult] = useState(null);
   const { speak, stopSpeaking, ttsEnabled, toggleTTS } = useAccessibility();
 
-  // Auto-fetch when opened with text
   useEffect(() => {
     if (isOpen && selectedText.trim()) {
       handleSimplify();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, [isOpen, selectedText]);
 
-  // Clear on close
   useEffect(() => {
     if (!isOpen) {
       setResult(null);

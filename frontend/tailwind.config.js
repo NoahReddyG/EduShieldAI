@@ -1,22 +1,3 @@
-/**
- * tailwind.config.js
- * EduShieldAI — Accessibility-First Design System
- *
- * Theme Design Principles:
- *  1. Standard theme    — default dark-mode exam UI with purple/indigo accents
- *  2. High Contrast     — WCAG AAA (7:1+) black/white/yellow for low-vision users
- *  3. Dyslexia-Friendly — warm, low-saturation palette + OpenDyslexic font family
- *
- * These themes are activated by data-* attributes on <html>:
- *   data-theme="default"        (default)
- *   data-theme="high-contrast"
- *   data-theme="dyslexia"
- *
- * Usage in components:
- *   <html data-theme="high-contrast">
- *   className="bg-surface text-on-surface font-body"
- */
-
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -24,34 +5,22 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
 
-  // Enable class-based dark mode so we can toggle it programmatically
-  // alongside our custom data-theme attributes.
   darkMode: "class",
 
   theme: {
     extend: {
-      // ─────────────────────────────────────────────────────────────────
-      // FONT FAMILIES
-      // OpenDyslexic is served from /public/fonts/ via @font-face in
-      // src/index.css. Inter is loaded from Google Fonts.
-      // ─────────────────────────────────────────────────────────────────
+
       fontFamily: {
-        // Default UI font — clean, highly legible sans-serif
+        
         sans: ["Inter", "system-ui", "sans-serif"],
-        // Body reading font (exam questions); swapped to OpenDyslexic
-        // when dyslexia mode is active
+
         body: ["Inter", "system-ui", "sans-serif"],
-        // Dyslexia-friendly font — referenced by the dyslexia theme
+        
         dyslexic: ["OpenDyslexic", "Arial", "sans-serif"],
-        // Monospace for code/debug output
+        
         mono: ["JetBrains Mono", "Fira Code", "monospace"],
       },
 
-      // ─────────────────────────────────────────────────────────────────
-      // FONT SIZES — Graduated scale for accessibility
-      // Supports programmatic font-size bumping via useAccessibility hook.
-      // xs to 3xl are custom sizes; Tailwind's defaults are preserved.
-      // ─────────────────────────────────────────────────────────────────
       fontSize: {
         "a11y-xs":   ["0.75rem",  { lineHeight: "1.6" }],
         "a11y-sm":   ["0.875rem", { lineHeight: "1.6" }],
@@ -62,35 +31,20 @@ export default {
         "a11y-3xl":  ["1.875rem", { lineHeight: "2.0" }],
       },
 
-      // ─────────────────────────────────────────────────────────────────
-      // LETTER SPACING — Fine-grained reading comfort
-      // ─────────────────────────────────────────────────────────────────
       letterSpacing: {
         "dyslexia-sm": "0.05em",
         "dyslexia-md": "0.12em",
         "dyslexia-lg": "0.20em",
       },
 
-      // ─────────────────────────────────────────────────────────────────
-      // LINE HEIGHT — Reading comfort scale
-      // ─────────────────────────────────────────────────────────────────
       lineHeight: {
         "reading-normal":  "1.75",
         "reading-relaxed": "2.0",
         "reading-loose":   "2.25",
       },
 
-      // ─────────────────────────────────────────────────────────────────
-      // COLOR PALETTE
-      //
-      // Semantic CSS custom properties are used so that swapping
-      // data-theme on <html> instantly re-skins every component.
-      //
-      // In components: bg-surface, text-on-surface, border-border, etc.
-      // Actual color values live in src/index.css as CSS variables.
-      // ─────────────────────────────────────────────────────────────────
       colors: {
-        // Semantic surface tokens (CSS var-driven)
+        
         surface:           "var(--color-surface)",
         "surface-raised":  "var(--color-surface-raised)",
         "surface-overlay": "var(--color-surface-overlay)",
@@ -99,7 +53,6 @@ export default {
         border:            "var(--color-border)",
         "border-focus":    "var(--color-border-focus)",
 
-        // Primary brand / accent
         primary: {
           DEFAULT: "var(--color-primary)",
           hover:   "var(--color-primary-hover)",
@@ -107,7 +60,6 @@ export default {
           fg:      "var(--color-primary-fg)",
         },
 
-        // Semantic feedback colors
         success: {
           DEFAULT: "var(--color-success)",
           muted:   "var(--color-success-muted)",
@@ -124,14 +76,12 @@ export default {
           fg:      "var(--color-danger-fg)",
         },
 
-        // Trust score gradient colors (for Recharts)
         trust: {
-          high:   "#22c55e",   // green-500  — high integrity
-          medium: "#f59e0b",   // amber-500  — moderate concern
-          low:    "#ef4444",   // red-500    — critical anomaly
+          high:   "#22c55e",   
+          medium: "#f59e0b",   
+          low:    "#ef4444",   
         },
 
-        // Proctoring UI specifics
         proctor: {
           frame:   "var(--color-proctor-frame)",
           safe:    "#16a34a",
@@ -140,7 +90,6 @@ export default {
           overlay: "rgba(0,0,0,0.65)",
         },
 
-        // High-contrast palette (static, referenced by HC theme)
         hc: {
           bg:               "#000000",
           surface:          "#0d0d0d",
@@ -154,13 +103,12 @@ export default {
           warning:          "#ffaa00",
         },
 
-        // Dyslexia-friendly palette (warm, low-saturation)
         dx: {
-          bg:               "#fdf6e3",  // warm cream
+          bg:               "#fdf6e3",  
           surface:          "#f8f0d8",
-          text:             "#3b2f1e",  // dark warm brown (not pure black)
+          text:             "#3b2f1e",  
           "text-secondary": "#6b5344",
-          accent:           "#c05621",  // burnt orange — high contrast on cream
+          accent:           "#c05621",  
           border:           "#d4b896",
           focus:            "#c05621",
           success:          "#2d6a4f",
@@ -169,9 +117,6 @@ export default {
         },
       },
 
-      // ─────────────────────────────────────────────────────────────────
-      // BORDER RADIUS — Softer, friendlier UI
-      // ─────────────────────────────────────────────────────────────────
       borderRadius: {
         "card":  "12px",
         "panel": "16px",
@@ -179,9 +124,6 @@ export default {
         "pill":  "9999px",
       },
 
-      // ─────────────────────────────────────────────────────────────────
-      // BOX SHADOWS — Elevation system
-      // ─────────────────────────────────────────────────────────────────
       boxShadow: {
         "card":    "0 2px 8px rgba(0,0,0,0.18), 0 1px 3px rgba(0,0,0,0.12)",
         "panel":   "0 4px 24px rgba(0,0,0,0.24), 0 2px 8px rgba(0,0,0,0.16)",
@@ -191,9 +133,6 @@ export default {
         "alert":   "0 0 0 2px #ef4444, 0 0 16px rgba(239,68,68,0.35)",
       },
 
-      // ─────────────────────────────────────────────────────────────────
-      // TRANSITIONS — Consistent motion tokens
-      // ─────────────────────────────────────────────────────────────────
       transitionDuration: {
         "fast":   "120ms",
         "normal": "200ms",
@@ -204,9 +143,6 @@ export default {
         "smooth": "cubic-bezier(0.4, 0, 0.2, 1)",
       },
 
-      // ─────────────────────────────────────────────────────────────────
-      // Z-INDEX — Explicit stacking context map
-      // ─────────────────────────────────────────────────────────────────
       zIndex: {
         "navbar":  "100",
         "proctor": "200",
@@ -216,36 +152,33 @@ export default {
         "tooltip": "600",
       },
 
-      // ─────────────────────────────────────────────────────────────────
-      // ANIMATIONS — Micro-interactions
-      // ─────────────────────────────────────────────────────────────────
       keyframes: {
-        // Pulsing ring for the live proctoring indicator
+        
         "proctor-ping": {
           "0%, 100%": { boxShadow: "0 0 0 0 rgba(34,197,94,0.7)" },
           "50%":       { boxShadow: "0 0 0 8px rgba(34,197,94,0)" },
         },
-        // Alert flash for anomaly detection
+        
         "alert-flash": {
           "0%, 100%": { backgroundColor: "transparent" },
           "50%":       { backgroundColor: "rgba(239,68,68,0.15)" },
         },
-        // Fade-in-up for toasts and panels
+        
         "fade-up": {
           "0%":   { opacity: "0", transform: "translateY(12px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
-        // Slide in from left for sidebar
+        
         "slide-in": {
           "0%":   { opacity: "0", transform: "translateX(-16px)" },
           "100%": { opacity: "1", transform: "translateX(0)" },
         },
-        // Trust score bar fill animation
+        
         "bar-fill": {
           "0%":   { width: "0%" },
           "100%": { width: "var(--tw-bar-width, 100%)" },
         },
-        // Shimmer for skeleton loading states
+        
         "shimmer": {
           "0%":   { backgroundPosition: "-200% 0" },
           "100%": { backgroundPosition: "200% 0" },

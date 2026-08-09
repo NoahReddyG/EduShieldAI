@@ -1,7 +1,3 @@
-/**
- * api.js — EduShieldAI Axios Instance
- * Centralized HTTP client with base URL, auth interceptor, and error handling.
- */
 import axios from 'axios';
 
 const api = axios.create({
@@ -12,7 +8,6 @@ const api = axios.create({
   timeout: 15000,
 });
 
-// ── Request Interceptor: Attach JWT Bearer token ─────────────────────────────
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('edushield_token');
@@ -24,7 +19,6 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// ── Response Interceptor: Normalize errors ───────────────────────────────────
 api.interceptors.response.use(
   (response) => response,
   (error) => {

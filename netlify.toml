@@ -1,17 +1,11 @@
-# ─────────────────────────────────────────────────────────────────────────────
-# EduShield AI — Netlify Deployment Configuration
-# ─────────────────────────────────────────────────────────────────────────────
-
 [build]
   base    = "frontend"
   command = "npm run build"
   publish = "dist"
 
-# Environment variables for build context (if needed)
 [build.environment]
   NODE_VERSION = "20"
 
-# Single-Page Application (SPA) Client-Side Routing Redirect
 [[redirects]]
   from   = "/*"
   to     = "/index.html"
