@@ -1,0 +1,21 @@
+/**
+ * App.css — Minimal global overrides.
+ * Heavy theming lives in index.css.
+ */
+
+/* Remove default Vite margins on #root */
+#root {
+  isolation: isolate;
+}
+
+/* Ensure inputs respect theme colors */
+input, textarea, select {
+  background-color: transparent;
+  color: inherit;
+}
+
+/* Button base reset */
+button {
+  font-family: inherit;
+  font-size: inherit;
+}
