@@ -40,9 +40,16 @@ export default defineConfig({
     rollupOptions: {
       output: {
         // Vendor-split strategy to keep initial bundle lean
-        manualChunks: {
-          react:      ['react', 'react-dom'],
-          mediapipe:  ['@mediapipe/camera_utils', '@mediapipe/face_mesh'],
+        manualChunks(id) {
+          if (id.includes('@mediapipe')) {
+            return 'mediapipe';
+          }
+          if (id.includes('react') || id.includes('react-dom') || id.includes('react-router-dom')) {
+            return 'react';
+          }
+          if (id.includes('node_modules')) {
+            return 'vendor';
+          }
         },
       },
     },
