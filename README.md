@@ -9,7 +9,6 @@
 [![Vite](https://img.shields.io/badge/Vite-8.x-646cff?style=flat&logo=vite)](https://vitejs.dev/)
 [![MySQL](https://img.shields.io/badge/MySQL-8.0-4479a1?style=flat&logo=mysql)](https://mysql.com/)
 [![Docker](https://img.shields.io/badge/Docker-Compose-2496ed?style=flat&logo=docker)](https://docs.docker.com/compose/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 **[Live Demo](#) · [API Docs](http://localhost:8000/docs) · [Report Issues](https://github.com/NoahReddyG/EduShieldAI/issues)**
 
@@ -30,7 +29,6 @@
 9. [Database Schema](#-database-schema)
 10. [Project Structure](#-project-structure)
 11. [Contributing](#-contributing)
-12. [License](#-license)
 
 ---
 
@@ -275,9 +273,3 @@ docker compose ps
 | `MYSQL_DB` | ✅ | `edushield_db` | Database name |
 | `GROQ_API_KEY` | ✅ | — | Groq LLM API Key |
 | `SECRET_KEY` | ✅ | — | JWT Secret Key |
-
----
-
-## 📄 License
-
-Distributed under the **MIT License**.
