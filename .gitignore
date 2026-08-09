@@ -96,3 +96,6 @@ htmlcov/
 *.cover
 junit.xml
 test-results/
+
+# ── Local Reports & Documentation ─────────────────────────────────────────────
+PROJECT_REPORT.md
