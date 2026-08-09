@@ -27,7 +27,7 @@ services:
     networks:
       - edushield_net
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_PASSWORD:-root}"]
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_PASSWORD:-root}" ]
       interval: 10s
       timeout: 5s
       retries: 10
@@ -49,7 +49,7 @@ services:
       MYSQL_USER: ${MYSQL_USER:-edushield}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD:-root}
       GROQ_API_KEY: ${GROQ_API_KEY}
-      SECRET_KEY: ${SECRET_KEY:-changeme_in_production}
+      SECRET_KEY: ${SECRET_KEY:-edushield_secret_key_change_in_production}
     ports:
       - "8000:8000"
     networks:
@@ -58,7 +58,7 @@ services:
       mysql:
         condition: service_healthy
     healthcheck:
-      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:8000/health')\" || exit 1"]
+      test: [ "CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:8000/health')\" || exit 1" ]
       interval: 30s
       timeout: 10s
       retries: 5
