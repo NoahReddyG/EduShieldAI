@@ -223,7 +223,17 @@ export default function ExamPage() {
     const next = Math.max(0, trustRef.current - deduction);
     trustRef.current = next;
     setTrustScore(next);
-    setAnomalyLog(prev => [...prev, { id: Date.now(), type: flagType, confidence, details, time: new Date().toLocaleTimeString() }]);
+    setAnomalyLog(prev => [...prev, {
+      log_id: Date.now(),
+      id: Date.now(),
+      flag_type: flagType,
+      type: flagType,
+      confidence_score: confidence,
+      confidence: confidence,
+      details,
+      timestamp: new Date().toISOString(),
+      time: new Date().toLocaleTimeString(),
+    }]);
   }, []);
 
   const handleSubmit = useCallback(async () => {
@@ -258,6 +268,15 @@ export default function ExamPage() {
       const totalQuestions = questions.length;
       const attemptedQuestions = answerReview.filter(a => a.isAnswered).length;
 
+      const timelineData = anomalyLog.map((a, idx) => ({
+        log_id: a.log_id || a.id || idx + 1,
+        session_id: sid,
+        flag_type: a.flag_type || a.type,
+        confidence_score: a.confidence_score ?? a.confidence ?? 1.0,
+        details: a.details || '',
+        timestamp: a.timestamp || new Date().toISOString(),
+      }));
+
       saveTestResult({
         testId: test.id,
         sessionId: sid,
@@ -266,7 +285,9 @@ export default function ExamPage() {
         trustScore: finalScore,
         status: finalScore < 60 ? 'FLAGGED' : 'COMPLETED',
         examTitle: test.title,
-        anomalyCount: anomalyLog.length,
+        anomalyCount: timelineData.length,
+        anomaly_timeline: timelineData,
+        anomalyLog: timelineData,
         answers,
         
         correctAnswers,
@@ -281,7 +302,7 @@ export default function ExamPage() {
     cameraRef.current?.stop?.();
     setSubmitting(false);
     navigate(`/report/${sid}`);
-  }, [submitting, test, user, answers, anomalyLog.length, navigate]);
+  }, [submitting, test, user, answers, anomalyLog, navigate]);
 
   const formatTime = s => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
 
